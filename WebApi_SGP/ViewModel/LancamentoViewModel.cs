@@ -7,5 +7,7 @@ namespace WebApi_SGP.ViewModel
 {
     public class LancamentoViewModel
     {
+        public string Login { get; set; }
+        public int LanTipo { get; set; }
     }
 }
