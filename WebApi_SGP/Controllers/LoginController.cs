@@ -24,8 +24,8 @@ namespace WebApi_SGP.Controllers
                 (!string.IsNullOrEmpty(usuarioViewModel.Senha)))
             {
                 var usuario = new Usuario();
-                usuario.UsuLogin = usuarioViewModel.Login;
-                usuario.UsuSenha = ConverterMD5.RetornarMD5String(usuarioViewModel.Login + usuarioViewModel.Senha + usuarioViewModel.Login);
+                usuario.UsuLogin = usuarioViewModel.Login.ToString().ToUpper();
+                usuario.UsuSenha = ConverterMD5.RetornarMD5String(usuarioViewModel.Login + usuarioViewModel.Senha.ToString().ToUpper() + usuarioViewModel.Login);
 
                 if (_usuarioRepository.Login(usuario))
                     return Ok();
