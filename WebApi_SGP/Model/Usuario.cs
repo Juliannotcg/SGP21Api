@@ -11,7 +11,6 @@ namespace WebApi_SGP.Model
     {
         [Key]
         public int UsuId { get; set; }
-
         public string UsuLogin { get; set; }
         public string UsuNome { get; set; }
         public string UsuSenha { get; set; }

@@ -2,24 +2,19 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using WebApi_SGP.Model;
 using WebApi_SGP.Repository;
-using WebApi_SGP.Services;
 using WebApi_SGP.ViewModel;
 
-namespace WebApi_SGP.Controllers
+namespace WebApi_SGP.Services
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class LancamentoController : ControllerBase
+    public class LancamentoService
     {
         private readonly LancamentoRepository _lancamentoRepository;
         private readonly UsuarioRepository _usuarioRepository;
         private readonly FolhaPontoRepository _folhaPontoRepository;
 
-        public LancamentoController(LancamentoRepository lancamentoRepository,
+        public LancamentoService(LancamentoRepository lancamentoRepository,
             UsuarioRepository usuarioRepository,
             FolhaPontoRepository folhaPontoRepository)
         {
@@ -27,17 +22,23 @@ namespace WebApi_SGP.Controllers
             _usuarioRepository = usuarioRepository;
             _folhaPontoRepository = folhaPontoRepository;
         }
-
-        [HttpPost]
-        public IActionResult Post([FromBody]LancamentoViewModel lancamentoViewModel)
+    
+        public bool PermiteInserir(LancamentoViewModel lancamentoViewModel)
         {
-            var service = new LancamentoService(_lancamentoRepository,
-            _usuarioRepository,
-            _folhaPontoRepository);
+            var usuario = _usuarioRepository.GetUsuarioLogin(lancamentoViewModel.Login);
+            var lancamento = new Lancamento();
 
-            var retorno = service.PermiteInserir(lancamentoViewModel);
+            lancamento.FolhaPonto = new FolhaPonto();
+            lancamento.FolhaPonto.FlpData = DateTime.Now;
 
-            return Ok();
+            lancamento.FolhaPonto.Usuario = usuario;
+
+            lancamento.FolhaPonto = _folhaPontoRepository.GetFolhaPonto(lancamento.FolhaPonto);
+
+
+
+            return true;
+
         }
     }
 }

@@ -15,14 +15,13 @@ namespace WebApi_SGP.Repository
 
         public void InseriLancamento(Lancamento obj)
         {
-            var sd =_context.Lancamento.Include(p => p.FolhaPonto)
-                                   .Where(e => e.UsuLogin.Equals(obj.UsuLogin)).First();
+         
         }
         public void Add(Lancamento obj)
         {
-            return _context.Usuario.Include(p => p.Perfil)
-                                   .Include(c => c.Cargo)
-                                   .Where(e => e.UsuLogin.Equals(obj.UsuLogin)).First();
+            //return _context.Usuario.Include(p => p.Perfil)
+            //                       .Include(c => c.Cargo)
+            //                       .Where(e => e.UsuLogin.Equals(obj.UsuLogin)).First();
 
 
             _context.Lancamento.Add(obj);

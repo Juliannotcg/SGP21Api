@@ -28,12 +28,6 @@ namespace WebApi_SGP.Maps
 
             builder.Property(c => c.LanEdicaoManual)
                 .HasColumnName("LanEdicaoManual");
-
-            builder.OwnsOne(c => c.Lan_Flp, folhaPonto =>
-            {
-                folhaPonto.Property(p => p.FlpId)
-                 .HasColumnName("Lan_Flp");
-            });
         }
     }
 }

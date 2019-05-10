@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using WebApi_SGP.Context;
 using WebApi_SGP.Repository;
+using WebApi_SGP.Services;
 
 namespace WebApi_SGP
 {
@@ -23,6 +24,8 @@ namespace WebApi_SGP
             services.AddScoped<ContextEntity, ContextEntity>();
             services.AddScoped<UsuarioRepository, UsuarioRepository>();
             services.AddScoped<LancamentoRepository, LancamentoRepository>();
+            services.AddScoped<FolhaPontoRepository, FolhaPontoRepository>();
+            services.AddTransient<LancamentoService, LancamentoService>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
 

@@ -12,7 +12,7 @@ namespace WebApi_SGP.Maps
     {
         public void Configure(EntityTypeBuilder<FolhaPonto> builder)
         {
-            builder.ToTable("FlpFolhaPonto");
+            builder.ToTable("SGP21_FlpFolhaPonto");
 
             builder.Property(c => c.FlpId)
                .HasColumnName("FlpId");
@@ -41,11 +41,6 @@ namespace WebApi_SGP.Maps
             builder.Property(c => c.FlpCumpriuPlanoIncentivo)
                 .HasColumnName("FlpCumpriuPlanoIncentivo");
 
-            builder.OwnsOne(c => c.Flp_UsuId, usuario =>
-            {
-                usuario.Property(u => u.UsuId)
-                 .HasColumnName("Flp_UsuId");
-            });
         }
     }
 }
