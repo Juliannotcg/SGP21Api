@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 using WebApi_SGP.Context;
 using WebApi_SGP.Model;
@@ -16,6 +17,11 @@ namespace WebApi_SGP.Repository
 
         public bool Login(Usuario obj)
         {
+
+            //var res = _context.Usuario.Include(u => u.Perfil).Where(e => e.UsuLogin.Equals(obj.UsuLogin) && e.UsuSenha.Equals(obj.UsuSenha));
+
+            var res = _context.Usuario.Include(u => u.Perfil).Where(e => e.UsuLogin.Equals(obj.UsuLogin) && e.UsuSenha.Equals(obj.UsuSenha));
+
             return _context.Usuario.Any(e => e.UsuLogin.Equals(obj.UsuLogin) && e.UsuSenha.Equals(obj.UsuSenha));
         }
 

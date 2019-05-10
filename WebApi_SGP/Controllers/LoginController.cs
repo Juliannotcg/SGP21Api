@@ -20,6 +20,12 @@ namespace WebApi_SGP.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] UsuarioViewModel usuarioViewModel)
         {
+
+
+
+
+
+
             if (!string.IsNullOrEmpty(usuarioViewModel.Login) ||
                 (!string.IsNullOrEmpty(usuarioViewModel.Senha)))
             {

@@ -39,26 +39,7 @@ namespace WebApi_SGP.Maps
 
             builder.Property(c => c.UsuHoraFimExpediente)
                 .HasColumnName("UsuHoraFimExpediente");
-
-            builder.Property(c => c.Usu_PerId)
-               .HasColumnName("Usu_PerId");
-
-            builder.Property(c => c.Usu_CrgId)
-             .HasColumnName("Usu_CrgId");
-
-
-
-            //builder.OwnsOne(c => c.Usu_PerId, perfil =>
-            //{
-            //    perfil.Property(p => p.PerId)
-            //     .HasColumnName("Usu_PerId");
-            //});
-
-            //builder.OwnsOne(c => c.Usu_CarId, cargo =>
-            //{
-            //    cargo.Property(p => p.CrgId)
-            //     .HasColumnName("Usu_PerId");
-            //});
+    
         }
     }
 }
