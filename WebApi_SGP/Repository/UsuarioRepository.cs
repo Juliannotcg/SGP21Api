@@ -15,13 +15,15 @@ namespace WebApi_SGP.Repository
             _context = context;
         }
 
+        public Usuario GetUsuarioLogin(string login)
+        {
+          return _context.Usuario.Include(p => p.Perfil)
+                                    .Include(c => c.Cargo)
+                                    .Where(e => e.UsuLogin.Equals(login)).First();
+        }
+
         public bool Login(Usuario obj)
         {
-
-            //var res = _context.Usuario.Include(u => u.Perfil).Where(e => e.UsuLogin.Equals(obj.UsuLogin) && e.UsuSenha.Equals(obj.UsuSenha));
-
-            var res = _context.Usuario.Include(u => u.Perfil).Where(e => e.UsuLogin.Equals(obj.UsuLogin) && e.UsuSenha.Equals(obj.UsuSenha));
-
             return _context.Usuario.Any(e => e.UsuLogin.Equals(obj.UsuLogin) && e.UsuSenha.Equals(obj.UsuSenha));
         }
 
