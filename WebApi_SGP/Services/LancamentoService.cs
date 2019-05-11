@@ -52,11 +52,6 @@ namespace WebApi_SGP.Services
             lancamento.LanObservacao = "";
 
             _lancamentoRepository.Add(lancamento);
-            
-
-
-
-
             return true;
 
         }
