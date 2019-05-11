@@ -25,14 +25,22 @@ namespace WebApi_SGP.Repository
                                  .First();
         }
 
+        public bool VerificarExisteFolhaDia(FolhaPonto folhaPonto)
+        {
+            return _contextEntity.FolhaPonto.Include(u => u.Usuario)
+                                 .Any(f => f.FlpData.Equals(folhaPonto.FlpData) && f.Usuario.Equals(folhaPonto.Usuario));
+        }
+
         public void Add(FolhaPonto obj)
         {
-            throw new NotImplementedException();
+            _contextEntity.FolhaPonto.Add(obj);
+            SaveChanges();
         }
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            _context.Dispose();
+            GC.SuppressFinalize(this);
         }
 
         public void Remove(Guid id)
@@ -42,7 +50,7 @@ namespace WebApi_SGP.Repository
 
         public int SaveChanges()
         {
-            throw new NotImplementedException();
+            return _contextEntity.SaveChanges();
         }
 
         public void Update(FolhaPonto obj)

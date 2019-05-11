@@ -18,7 +18,7 @@ namespace WebApi_SGP.Model
         public int FlpTrabalhadas { get; set; }
         public int FlpAbonadas { get; set; }
         public int FlpHorasPlanoIncentivo { get; set; }
-        public int FlpCumpriuPlanoIncentivo { get; set; }
+        public bool FlpCumpriuPlanoIncentivo { get; set; }
 
         [ForeignKey("Flp_UsuId")]
         public Usuario Usuario { get; set; }

@@ -13,17 +13,13 @@ namespace WebApi_SGP.Repository
         protected readonly ContextEntity _context;
 
 
-        public void InseriLancamento(Lancamento obj)
+        public LancamentoRepository(ContextEntity context)
         {
-         
+            _context = context;
         }
+ 
         public void Add(Lancamento obj)
         {
-            //return _context.Usuario.Include(p => p.Perfil)
-            //                       .Include(c => c.Cargo)
-            //                       .Where(e => e.UsuLogin.Equals(obj.UsuLogin)).First();
-
-
             _context.Lancamento.Add(obj);
             SaveChanges();
         }

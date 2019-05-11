@@ -30,10 +30,30 @@ namespace WebApi_SGP.Services
 
             lancamento.FolhaPonto = new FolhaPonto();
             lancamento.FolhaPonto.FlpData = DateTime.Now;
-
             lancamento.FolhaPonto.Usuario = usuario;
 
-            lancamento.FolhaPonto = _folhaPontoRepository.GetFolhaPonto(lancamento.FolhaPonto);
+            if (!_folhaPontoRepository.VerificarExisteFolhaDia(lancamento.FolhaPonto))
+            {
+                lancamento.FolhaPonto.FlpData = DateTime.Now;
+                lancamento.FolhaPonto.FlpTrabalhadas = 0;
+                lancamento.FolhaPonto.FlpAbonadas = 0;
+                lancamento.FolhaPonto.FlpHorasPlanoIncentivo = 0;
+                lancamento.FolhaPonto.FlpEntradas = 0;
+                lancamento.FolhaPonto.FlpSaidas = 0;
+                lancamento.FolhaPonto.FlpAbonos = 0;
+                lancamento.FolhaPonto.FlpCumpriuPlanoIncentivo = false;
+
+                _folhaPontoRepository.Add(lancamento.FolhaPonto);
+            }
+
+            lancamento.LanDataHora = DateTime.Now;
+            lancamento.LanTipo = Convert.ToInt16(lancamentoViewModel.LanTipo);
+            lancamento.LanEdicaoManual = false;
+            lancamento.LanObservacao = "";
+
+            _lancamentoRepository.Add(lancamento);
+            
+
 
 
 

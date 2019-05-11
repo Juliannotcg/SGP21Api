@@ -24,7 +24,7 @@ namespace WebApi_SGP.Context
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=JULIANO\JULIANNO;Database=SGP21;Trusted_Connection=True;User ID=sa;Password=p21Sistemas;");
+            optionsBuilder.UseSqlServer(@"Server=JULIANNO;Database=SGP21;Trusted_Connection=True;User ID=sa;Password=garciajtc241188;");
         }
     }
 }
