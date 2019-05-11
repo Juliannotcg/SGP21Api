@@ -39,7 +39,7 @@ namespace WebApi_SGP.Repository
 
         public void Dispose()
         {
-            _context.Dispose();
+            _contextEntity.Dispose();
             GC.SuppressFinalize(this);
         }
 
