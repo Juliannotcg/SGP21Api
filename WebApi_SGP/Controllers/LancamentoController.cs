@@ -35,7 +35,7 @@ namespace WebApi_SGP.Controllers
             _usuarioRepository,
             _folhaPontoRepository);
 
-            var retorno = service.PermiteInserir(lancamentoViewModel);
+            var retorno = service.InserirLancamento(lancamentoViewModel);
 
             return Ok();
         }

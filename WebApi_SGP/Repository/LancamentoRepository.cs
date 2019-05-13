@@ -17,7 +17,16 @@ namespace WebApi_SGP.Repository
         {
             _context = context;
         }
- 
+
+        public List<Lancamento> GetListLancamento(Lancamento folhaPonto)
+        {
+            var resultado = _context.Lancamento.Include(f => f.FolhaPonto)
+                                          .Where(f => f.FolhaPonto.FlpId == folhaPonto.FolhaPonto.FlpId);
+
+
+            return resultado.ToList();
+        }
+
         public void Add(Lancamento obj)
         {
             _context.Lancamento.Add(obj);

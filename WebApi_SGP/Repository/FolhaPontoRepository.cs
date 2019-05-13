@@ -25,6 +25,8 @@ namespace WebApi_SGP.Repository
                                  .First();
         }
 
+       
+
         public bool VerificarExisteFolhaDia(FolhaPonto folhaPonto)
         {
             return _contextEntity.FolhaPonto.Include(u => u.Usuario)

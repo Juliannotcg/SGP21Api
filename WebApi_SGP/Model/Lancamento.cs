@@ -14,7 +14,7 @@ namespace WebApi_SGP.Model
         public DateTime LanDataHora { get; set; }
         public int LanTipo { get; set; }
         public string LanObservacao { get; set; }
-        public bool LanEdicaoManual { get; set; }
+        public bool? LanEdicaoManual { get; set; }
 
         [ForeignKey("Lan_FlpId")]
         public FolhaPonto FolhaPonto { get; set; } 
