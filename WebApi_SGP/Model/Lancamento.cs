@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
+using WebApi_SGP.Enums;
 
 namespace WebApi_SGP.Model
 {
@@ -12,7 +13,7 @@ namespace WebApi_SGP.Model
         [Key]
         public int LanId { get; set; }
         public DateTime LanDataHora { get; set; }
-        public int LanTipo { get; set; }
+        public ETipoLancamento LanTipo { get; set; }
         public string LanObservacao { get; set; }
         public bool? LanEdicaoManual { get; set; }
 
