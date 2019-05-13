@@ -54,7 +54,7 @@ namespace WebApi_SGP.Services
 
             _lancamentoRepository.Add(lancamento);
 
-            RecalcularDadosFolhaPonto2018(lancamento);
+            //RecalcularDadosFolhaPonto2018(lancamento);
 
 
 
@@ -63,70 +63,88 @@ namespace WebApi_SGP.Services
         }
 
 
-        public bool RecalcularDadosFolhaPonto2018(Lancamento lanc)
-        {
-            List<Lancamento> lancamentos = _lancamentoRepository.GetListLancamento(lanc);
+        //public bool RecalcularDadosFolhaPonto2018(Lancamento lanc)
+        //{
+        //    List<Lancamento> lancamentos = _lancamentoRepository.GetListLancamento(lanc);
 
-            if (lancamentos.Count == 0)
-            {
-                //Excluir
-                //return executar(nucleo, Operacao.Excluir, ref folha);
-            }
-            int entradas = 0;
-            int saidas = 0;
-            int abonos = 0;
-            Dictionary<int, ObjAbono> abonosVistos = new Dictionary<int, ObjAbono>();
-            TimeSpan trabalhadas = new TimeSpan();
-            TimeSpan abonadas = new TimeSpan();
-            TimeSpan planoIncentivo = new TimeSpan();
-            Lancamento inicio = null;
-            foreach (Lancamento lancamento in lancamentos)
-            {
-                if (lancamento.LanTipo.Equals(ETipoLancamento.Entrada))
-                    entradas++;
-                else if (lancamento.LanTipo.Equals(ETipoLancamento.FimTurno))
-                    saidas++;
+        //    if (lancamentos.Count == 0)
+        //    {
+        //        //Excluir
+        //        //return executar(nucleo, Operacao.Excluir, ref folha);
+        //    }
+        //    int entradas = 0;
+        //    int saidas = 0;
+        //    int abonos = 0;
+        //    Dictionary<int, Abono> abonosVistos = new Dictionary<int, Abono>();
+        //    TimeSpan trabalhadas = new TimeSpan();
+        //    TimeSpan abonadas = new TimeSpan();
+        //    TimeSpan planoIncentivo = new TimeSpan();
+        //    Lancamento inicio = null;
+        //    foreach (Lancamento lancamento in lancamentos)
+        //    {
+        //        if (lancamento.LanTipo.Equals(ETipoLancamento.Entrada))
+        //            entradas++;
+        //        else if (lancamento.LanTipo.Equals(ETipoLancamento.FimTurno))
+        //            saidas++;
 
-                if (!BaseObjeto.EhNulo(lancamento.Abono) && !abonosVistos.ContainsKey(lancamento.Abono.Prop<int>("AbnId")))
-                {
-                    if (!lancamento.Abono.TipoAbono.Ferias)
-                        abonadas += CalcularAbonadas(lancamento.Abono);
-                    abonosVistos.Add(lancamento.Abono.Prop<int>("AbnId"), lancamento.Abono);
-                    abonos++;
-                }
-                if (inicio == null)
-                    inicio = lancamento;
-                else
-                {
-                    if (!inicio.Tipo.Entrada) throw new Exception("Erro ao calcular horas trabalhadas. O lançamento inicial do período não é de entrada.");
-                    if (!lancamento.Tipo.Saida) throw new Exception("Erro ao calcular horas trabalhadas. O lançamento final do período não é de saída.");
-                    if (inicio.DataHora > lancamento.DataHora) throw new Exception("Erro ao calcular horas trabalhadas. Data inicial maior que a data final.");
-                    if (((!BaseObjeto.EhNulo(inicio.Abono) && inicio.Abono.TipoAbono.Id != 6) || (!BaseObjeto.EhNulo(lancamento.Abono) && lancamento.Abono.TipoAbono.Id != 6))
-                        && (inicio.Abono.Id != lancamento.Abono.Id)) throw new Exception("Erro ao calcular horas trabalhadas. Entrada e saída possuem abonos diferentes.");
-                    if (BaseObjeto.EhNulo(lancamento.Abono))
-                        trabalhadas += lancamento.DataHora - inicio.DataHora;
-                    planoIncentivo += CalcularPlanoIncentivo(inicio, lancamento);
-                    inicio = null;
-                }
-            }
-            folhaPonto.Propriedades["FlpEntradas"].Valor = entradas;
-            folhaPonto.Propriedades["FlpSaidas"].Valor = saidas;
-            folhaPonto.Propriedades["FlpAbonos"].Valor = abonos;
-            folhaPonto.Propriedades["FlpTrabalhadas"].Valor = trabalhadas.Ticks;
-            folhaPonto.Propriedades["FlpAbonadas"].Valor = abonadas.Ticks;
-            folhaPonto.Propriedades["FlpHorasPlanoIncentivo"].Valor = planoIncentivo.Ticks;
-            folhaPonto.Propriedades["FlpCumpriuPlanoIncentivo"].Valor = planoIncentivo.Ticks >= Parametros.Prop<DateTime>(Constantes.Parametros.QuantidadeHorasPlanoIncentivo).TimeOfDay.Ticks;
-            BaseObjeto temp = folhaPonto.Clone();
-            if (!executar(nucleo, Operacao.Editar, ref temp))
-            {
-                nucleo.ListaErros.Add("Ocorreu um erro durante a atualização dos valores da folha de ponto.",
-                    "CTRLFLHPNTRCLCLRDDSFLHPNT-001", "", "", GetType().ToString(), TipoErro.Sistema);
-                return false;
-            }
-            else
-                return true;
+        //        if (lancamento.Abono != null && !abonosVistos.ContainsKey(lancamento.Abono.AbnId))
+        //        {
+        //            if (!lancamento.Abono.AbnTipo.Ferias)
+        //                abonadas += CalcularAbonadas(lancamento.Abono);
+        //            abonosVistos.Add(lancamento.Abono.Prop<int>("AbnId"), lancamento.Abono);
+        //            abonos++;
+        //        }
+        //        if (inicio == null)
+        //            inicio = lancamento;
+        //        else
+        //        {
+        //            if (!inicio.Tipo.Entrada) throw new Exception("Erro ao calcular horas trabalhadas. O lançamento inicial do período não é de entrada.");
+        //            if (!lancamento.Tipo.Saida) throw new Exception("Erro ao calcular horas trabalhadas. O lançamento final do período não é de saída.");
+        //            if (inicio.DataHora > lancamento.DataHora) throw new Exception("Erro ao calcular horas trabalhadas. Data inicial maior que a data final.");
+        //            if (((!BaseObjeto.EhNulo(inicio.Abono) && inicio.Abono.TipoAbono.Id != 6) || (!BaseObjeto.EhNulo(lancamento.Abono) && lancamento.Abono.TipoAbono.Id != 6))
+        //                && (inicio.Abono.Id != lancamento.Abono.Id)) throw new Exception("Erro ao calcular horas trabalhadas. Entrada e saída possuem abonos diferentes.");
+        //            if (BaseObjeto.EhNulo(lancamento.Abono))
+        //                trabalhadas += lancamento.DataHora - inicio.DataHora;
+        //            planoIncentivo += CalcularPlanoIncentivo(inicio, lancamento);
+        //            inicio = null;
+        //        }
+        //    }
 
-            return true;
-        }
+        //    lanc.FolhaPonto.FlpEntradas = entradas;
+        //    lanc.FolhaPonto.FlpSaidas = saidas;
+        //    lanc.FolhaPonto.FlpAbonos = abonos;
+        //    lanc.FolhaPonto.FlpTrabalhadas = trabalhadas.Ticks;
+        //    lanc.FolhaPonto.FlpAbonadas = abonadas.Ticks;
+        //    lanc.FolhaPonto.FlpHorasPlanoIncentivo = planoIncentivo.Ticks;
+        //    lanc.FolhaPonto.FlpCumpriuPlanoIncentivo = planoIncentivo.Ticks >= Parametros.Prop<DateTime>(Constantes.Parametros.QuantidadeHorasPlanoIncentivo).TimeOfDay.Ticks;
+
+         
+        //    if (!executar(nucleo, Operacao.Editar, ref temp))
+        //    {
+        //        nucleo.ListaErros.Add("Ocorreu um erro durante a atualização dos valores da folha de ponto.",
+        //            "CTRLFLHPNTRCLCLRDDSFLHPNT-001", "", "", GetType().ToString(), TipoErro.Sistema);
+        //        return false;
+        //    }
+        //    else
+        //        return true;
+
+        //    return true;
+        //}
+
+        //private TimeSpan CalcularPlanoIncentivo(Lancamento inicio, Lancamento fim)
+        //{
+        //    if (inicio.LanDataHora > fim.LanDataHora) throw new Exception("Erro ao calcular as horas do plano de incentivo. Data inicial maior que a data final");
+        //    if (inicio.Abono != null || fim.Abono != null)
+        //    {
+        //        if (inicio.Abono.AbnId != fim.Abono.AbnId) throw new Exception("Erro ao calcular as horas do plano de incentivo. Dois lançamentos com abonos diferentes foram informados");
+        //        if (inicio.Abono.AbnHoraInicio != inicio.LanDataHora) throw new Exception("Erro ao calcular as horas do plano de incentivo. Hora inicial do abono tem valor diferente do lançamento que ele gerou");
+        //        if (fim.Abono.AbnHoraFim != fim.LanDataHora) throw new Exception("Erro ao calcular as horas do plano de incentivo. Hora final do abono tem valor diferente do lançamento que ele gerou");
+        //    }
+
+            
+        //    TimeSpan inicioCorreto = inicio.LanDataHora.TimeOfDay >= Parametros.Prop<DateTime>(Constantes.Parametros.InicioPlanoIncentivo).TimeOfDay ? inicio.DataHora.TimeOfDay : Parametros.Prop<DateTime>(Constantes.Parametros.InicioPlanoIncentivo).TimeOfDay;
+        //    TimeSpan fimCorreto = fim.LanDataHora.TimeOfDay <= Parametros.Prop<DateTime>(Constantes.Parametros.FimPlanoIncentivo).TimeOfDay ? fim.DataHora.TimeOfDay : Parametros.Prop<DateTime>(Constantes.Parametros.FimPlanoIncentivo).TimeOfDay;
+        //    return fimCorreto - inicioCorreto;
+        //}
     }
 }

@@ -11,7 +11,6 @@ namespace WebApi_SGP.Context
         public DbSet<Lancamento> Lancamento { get; set; }
         public DbSet<Perfil> Perfil { get; set; }
         public DbSet<Usuario> Usuario { get; set; }
-        public DbSet<Abono> Abono { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -20,7 +19,6 @@ namespace WebApi_SGP.Context
             modelBuilder.ApplyConfiguration(new LancamentoMap());
             modelBuilder.ApplyConfiguration(new PerfilMap());
             modelBuilder.ApplyConfiguration(new UsuarioMap());
-            modelBuilder.ApplyConfiguration(new AbonoMap());
             base.OnModelCreating(modelBuilder);
         }
 
