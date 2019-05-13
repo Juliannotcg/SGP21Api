@@ -18,6 +18,9 @@ namespace WebApi_SGP.Model
         public bool? LanEdicaoManual { get; set; }
 
         [ForeignKey("Lan_FlpId")]
-        public FolhaPonto FolhaPonto { get; set; } 
+        public FolhaPonto FolhaPonto { get; set; }
+
+        [ForeignKey("Lan_AbnId")]
+        public Abono Abono { get; set; }
     }
 }

@@ -48,7 +48,7 @@ namespace WebApi_SGP.Services
             }
 
             lancamento.LanDataHora = DateTime.Now;
-            lancamento.LanTipo = Convert.ToInt16(lancamentoViewModel.LanTipo);
+            lancamento.LanTipo = (ETipoLancamento)Convert.ToInt32(lancamentoViewModel.LanTipo);
             lancamento.LanEdicaoManual = false;
             lancamento.LanObservacao = "";
 
@@ -84,8 +84,9 @@ namespace WebApi_SGP.Services
             {
                 if (lancamento.LanTipo.Equals(ETipoLancamento.Entrada))
                     entradas++;
-                else if (lancamento.Tipo.Saida)
+                else if (lancamento.LanTipo.Equals(ETipoLancamento.FimTurno))
                     saidas++;
+
                 if (!BaseObjeto.EhNulo(lancamento.Abono) && !abonosVistos.ContainsKey(lancamento.Abono.Prop<int>("AbnId")))
                 {
                     if (!lancamento.Abono.TipoAbono.Ferias)
